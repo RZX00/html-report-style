@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+assets/fonts/*.otf
+assets/fonts/*.woff2
+output/
+.env
+.env.*

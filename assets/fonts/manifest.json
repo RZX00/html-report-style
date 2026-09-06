@@ -1,0 +1,42 @@
+{
+  "source": "https://code.claude.com/docs/en/claude-directory#ce-memory-md",
+  "captured": "2026-09-06",
+  "fonts": [
+    {
+      "file": "AnthropicSans-Text-Bold-Static.otf",
+      "url": "https://assets.claude.ai/Fonts/AnthropicSans-Text-Bold-Static.otf",
+      "bytes": 63580,
+      "sha256": "ef085735405bedaca759c98bc90ee853d34f3aeca28a915dcfa4759e6b69dd7d"
+    },
+    {
+      "file": "AnthropicSans-Text-Medium-Static.otf",
+      "url": "https://assets.claude.ai/Fonts/AnthropicSans-Text-Medium-Static.otf",
+      "bytes": 61528,
+      "sha256": "9286e181e9de7bd65bbeec68c5e88159abd89cd0750ea97b6af31da6212c6023"
+    },
+    {
+      "file": "AnthropicSans-Text-Regular-Static.otf",
+      "url": "https://assets.claude.ai/Fonts/AnthropicSans-Text-Regular-Static.otf",
+      "bytes": 61144,
+      "sha256": "9fdf9048587cf014deb4d6e049b92f5c1689bd3a14f12d18c4c7a3b77da6fcdb"
+    },
+    {
+      "file": "AnthropicSans-Text-Semibold-Static.otf",
+      "url": "https://assets.claude.ai/Fonts/AnthropicSans-Text-Semibold-Static.otf",
+      "bytes": 62380,
+      "sha256": "96131bc98138a7f0e0af1367e06cbe08099386025ab84cd5a8a113c5510816af"
+    },
+    {
+      "file": "AnthropicSerif-Display-Regular-Static.otf",
+      "url": "https://assets.claude.ai/Fonts/AnthropicSerif-Display-Regular-Static.otf",
+      "bytes": 68796,
+      "sha256": "f90d31564307c521d8284d6cc91f3063d4ab7501355b81b6353f05141ac7e680"
+    },
+    {
+      "file": "PaperMono-Variable.woff2",
+      "url": "https://code.claude.com/docs/_next/static/media/PaperMono_Variable.p.aa32f7a0.woff2",
+      "bytes": 52584,
+      "sha256": "ca2fbd40c7f5c39cc00fb8d754ca542079841477d36febd502137ab61a70a1fb"
+    }
+  ]
+}

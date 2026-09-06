@@ -1,0 +1,43 @@
+# HTML Report Style
+
+生成中文优先、可离线查看的 HTML 报告，视觉参考 [Claude Code 官方中文文档](https://code.claude.com/docs/zh-CN/claude-directory)。适用于分析、规划、评审和架构说明。
+
+独立社区 Skill，与 Anthropic 官方无隶属关系。模板保留自己的报告品牌，不包含官方网站的账号、搜索或 AI 助手服务。
+
+## 使用
+
+需要 Python 3.9+，无第三方 Python 依赖。
+
+将仓库克隆到 Codex 的 Skill 目录：
+
+```sh
+git clone https://github.com/RZX00/html-report-style.git ~/.codex/skills/html-report-style
+```
+
+如果该位置已有安装，先检查原目录，勿覆盖已有修改。也可以克隆到任意目录，让 Agent 读取其中的 `SKILL.md`。
+
+没有官方字体时，用系统字体生成可用的离线报告：
+
+```sh
+python scripts/create_report.py --output output/report.html --title "分析报告" --system-fonts
+```
+
+需要匹配原站英文字体时，先在本地准备你有权使用的字体文件，再运行：
+
+```sh
+python scripts/create_report.py --output output/report.html --title "分析报告" --font-dir /path/to/fonts
+```
+
+文件名和原始公开来源见 [字体清单](assets/fonts/manifest.json)。仓库不重新分发官方字体，也不包含内嵌这些字体的示例报告。字体的使用、嵌入和分发遵循其权利人的条款；本仓库不授予第三方字体权利。
+
+生成后让 Agent 按 `SKILL.md` 替换示例正文、目录和元信息。脚本不会覆盖已有输出文件。内嵌字体的生成文件无需联网；系统字体模式的外观取决于本机字体，不能保证与原站一致。
+
+## 内容
+
+- `SKILL.md`：报告生成与验证规则。
+- `references/habitat-html-report-template.html`：可复用页面模板；文件名沿用历史命名。
+- `references/claude-docs-visual-spec.md`：实测样式、来源和适配差异。
+- `scripts/create_report.py`：将字体嵌入独立 HTML 的生成脚本。
+- `agents/openai.yaml`：Codex 展示信息。
+
+支持深浅色、章节目录、代码复制、可选文件详情组件，以及手机布局。中文标题保留官方中文页的字体栈，不额外强制宋体。不同系统的中文字体回退仍可能不同，不承诺整页像素完全一致。
