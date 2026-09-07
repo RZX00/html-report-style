@@ -60,3 +60,7 @@ python scripts/create_report.py --output output/visual-report.html --system-font
 - `agents/openai.yaml`：Codex 展示信息。
 
 支持深浅色、章节目录、代码复制、可选文件详情组件，以及手机布局。中文标题保留官方中文页的字体栈，不额外强制宋体。不同系统的中文字体回退仍可能不同，不承诺整页像素完全一致。
+
+### 图形深浅色适配
+
+使用 `--theme dark` 为 Mermaid 和科研图生成深色版本，在清单中通过 `dark_file` 指定。背景、文字与坐标轴适配主题，数据颜色和热力图色阶保持一致；下载跟随当前主题，打印采用浅色版本。自有 SVG 示例提供配套深色文件。

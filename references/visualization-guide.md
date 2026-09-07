@@ -27,16 +27,16 @@ Inspect the rendered diagram: syntactically valid Mermaid can still overlap or h
 
 `assets/figures/architecture.svg` and `assets/figures/lifecycle.svg` demonstrate boundaries, connectors, labels and restrained accent colors. Replace sample text and relationships with verified facts. SVG files have title/desc and a viewBox. Export scientific plots with SVG text converted to paths for consistent offline output; captions and data tables provide searchable information.
 
-Static scientific figures keep their original light background in both report themes so color/contrast meanings do not change. Do not invert scientific images in dark mode. Use the viewer for large figures and provide download links; all base figures remain visible without JavaScript and print at full width.
+Generate matching light and dark variants from the same data: change background, text, axes and neutral borders, while preserving series colors, colormap, normalization, values and uncertainty. Supply `dark_file` in the figure manifest; the viewer follows the report theme (including saved theme), downloads the active variant, and uses the light variant when printing. Never leave newly generated diagrams or charts as bright panels in dark mode. Legacy third-party images without a dark variant retain their original pixels; do not claim they adapt. Do not invert scientific images in dark mode. Use the viewer for large figures and provide download links; all base figures remain visible without JavaScript and print at full width.
 
 ## Report figure input
 
 Pass `--figures-json path/to/figures.json` to create_report.py. JSON is a list of objects:
 
 ```json
-[{"file":"architecture.svg","title":"Request ownership","alt":"Gateway passes the request to the API, which reads the database.","caption":"The API owns business processing; arrows show request direction.","source":"Reviewed architecture, revision abc123"}]
+[{"file":"architecture.svg","dark_file":"architecture-dark.svg","title":"Request ownership","alt":"Gateway passes the request to the API, which reads the database.","caption":"The API owns business processing; arrows show request direction.","source":"Reviewed architecture, revision abc123"}]
 ```
 
-Paths are relative to the manifest. SVG and PNG are embedded as data URLs. Figures are wrapped in semantic figure/figcaption. Title, alt, caption and source are required; the source may explicitly say “illustrative / simulated”, never imply real measurements. The SVG validator is a bounded admission check, not a general-purpose sanitizer: only include trusted locally authored diagrams. It rejects scripts, HTML foreignObject, event handlers, external resources, DTDs and entities.
+Both `file` (light) and optional `dark_file` paths are relative to the manifest and receive identical validation. Produce both variants for newly authored figures. Use `--theme dark` with plot_data.py or render_mermaid.py to generate the companion; these tools default to light. SVG and PNG are embedded as data URLs. Figures are wrapped in semantic figure/figcaption. Title, alt, caption and source are required; the source may explicitly say “illustrative / simulated”, never imply real measurements. The SVG validator is a bounded admission check, not a general-purpose sanitizer: only include trusted locally authored diagrams. It rejects scripts, HTML foreignObject, event handlers, external resources, DTDs and entities.
 
 The reader can zoom, drag, scroll, reset to fit and download each figure. Wheel scrolling remains normal page/viewport scrolling. Mobile uses native touch scrolling; controls remain keyboard accessible. No editing canvas, graph database or external scripts are added.

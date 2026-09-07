@@ -1,5 +1,9 @@
 (()=>{'use strict';document.querySelectorAll('.report-figure').forEach(figure=>{
 const viewport=figure.querySelector('.figure-viewport'),img=viewport.querySelector('img'),label=figure.querySelector('.figure-scale');let zoom=1,drag;
+const download=figure.querySelector('[data-figure-download]');
+function theme(print=false){const dark=!print&&document.documentElement.dataset.theme==='dark',key=dark?'dark':'light';if(!img.style.aspectRatio&&img.naturalWidth)img.style.aspectRatio=img.naturalWidth+' / '+img.naturalHeight;img.src=img.dataset[key];download.href=download.dataset[key];download.download=download.dataset[key+'Name']}
+new MutationObserver(()=>theme()).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+window.addEventListener('beforeprint',()=>theme(true));window.addEventListener('afterprint',()=>theme());theme();
 function scale(value){zoom=Math.max(.5,Math.min(12,value));img.style.width=(zoom*100)+'%';label.textContent=Math.round(zoom*100)+'%'}
 figure.querySelector('[data-zoom-in]').addEventListener('click',()=>scale(zoom*1.25));
 figure.querySelector('[data-zoom-out]').addEventListener('click',()=>scale(zoom/1.25));

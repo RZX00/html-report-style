@@ -17,6 +17,7 @@ def main():
     for name in ['title','xlabel','ylabel','source']:
         p.add_argument('--'+name, required=True)
     p.add_argument('--error-label')
+    p.add_argument('--theme', choices=['light','dark'], default='light')
     p.add_argument('--font', default='DejaVu Sans')
     a = p.parse_args()
     provenance = a.output.with_suffix('.provenance.json')
@@ -35,8 +36,10 @@ def main():
             raise ValueError('Non-finite value')
         return n
     plt.rcParams.update({'font.family':a.font, 'font.size':11, 'svg.fonttype':'path','axes.spines.top':False,'axes.spines.right':False})
+    bg,fg,grid = ('#191919','#deded6','#777770') if a.theme=='dark' else ('#fdfdf7','#171717','#b0b0a8')
+    plt.rcParams.update({'text.color':fg,'axes.labelcolor':fg,'axes.edgecolor':grid,'xtick.color':fg,'ytick.color':fg,'grid.color':grid})
     fig, ax = plt.subplots(figsize=(8,4.8),layout='constrained')
-    fig.set_facecolor('#fdfdf7'); ax.set_facecolor('#fdfdf7')
+    fig.set_facecolor(bg); ax.set_facecolor(bg)
     try:
         if a.kind in ['line','scatter','bar']:
             x = [r['x'] if a.kind=='bar' else number(r['x']) for r in rows]
@@ -50,7 +53,7 @@ def main():
             ax.grid(axis='y',alpha=.18); ax.set_axisbelow(True)
         elif a.kind=='box':
             columns=list(rows[0]); values=[[number(r[k]) for r in rows] for k in columns]
-            ax.boxplot(values,tick_labels=[f'{k}\n(n={len(rows)})' for k in columns],patch_artist=True,boxprops={'facecolor':'#ead2c5'})
+            ax.boxplot(values,tick_labels=[f'{k}\n(n={len(rows)})' for k in columns],patch_artist=True,boxprops={'facecolor':'#ead2c5','edgecolor':fg},whiskerprops={'color':fg},capprops={'color':fg},medianprops={'color':'#d97757'},flierprops={'markeredgecolor':fg})
         else:
             columns=list(rows[0]); values=[[number(r[k]) for k in columns[1:]] for r in rows]
             if len(columns)<2: raise ValueError('Heatmap needs row labels and numeric columns')
@@ -58,7 +61,7 @@ def main():
             ax.set_xticks(range(len(columns)-1),columns[1:]); ax.set_yticks(range(len(rows)),[r[columns[0]] for r in rows])
             fig.colorbar(im,ax=ax,label='Value')
         ax.set(title=a.title,xlabel=a.xlabel,ylabel=a.ylabel)
-        fig.text(.01,-.02,a.source,fontsize=8,color='#5e5d59')
+        fig.text(.01,-.02,a.source,fontsize=8,color=fg)
         buffer=io.BytesIO()
         with warnings.catch_warnings():
             warnings.filterwarnings('error',message='Glyph .* missing from font')
@@ -67,7 +70,7 @@ def main():
         p.error(str(e))
     finally:
         plt.close(fig)
-    meta={'source':a.source,'data_sha256':hashlib.sha256(raw).hexdigest(),'rows':len(rows),'kind':a.kind,'title':a.title,'xlabel':a.xlabel,'ylabel':a.ylabel,'error_definition':a.error_label,'matplotlib':matplotlib.__version__}
+    meta={'theme':a.theme,'source':a.source,'data_sha256':hashlib.sha256(raw).hexdigest(),'rows':len(rows),'kind':a.kind,'title':a.title,'xlabel':a.xlabel,'ylabel':a.ylabel,'error_definition':a.error_label,'matplotlib':matplotlib.__version__}
     a.output.parent.mkdir(parents=True,exist_ok=True)
     data = buffer.getvalue()
     if a.output.suffix.lower()=='.svg':
