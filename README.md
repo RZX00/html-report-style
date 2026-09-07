@@ -32,7 +32,26 @@ python scripts/create_report.py --output output/report.html --title "分析报�
 
 生成后让 Agent 按 `SKILL.md` 替换示例正文、目录和元信息。脚本不会覆盖已有输出文件。内嵌字体的生成文件无需联网；系统字体模式的外观取决于本机字体，不能保证与原站一致。
 
-## 内容
+## 图形与科研数据
+
+按信息选择表格、ASCII、Mermaid、SVG、可缩放画布和科研图表；不要求每份报告塞满图形。完整规范见 [图形选择指南](references/visualization-guide.md) 和 [科研绘图规范](references/scientific-figures.md)。
+
+```sh
+# 可选：科研绘图依赖
+python -m pip install -r requirements-plot.txt
+python scripts/plot_data.py examples/simulated.csv output/trend.svg --kind line --title "Simulated example" --xlabel "Step" --ylabel "Value" --source "Simulated teaching data, n=5" --error-label "Illustrative error magnitudes"
+
+# 可选：Mermaid 构建依赖；报告运行时无需 Node 或网络
+npm install -g @mermaid-js/mermaid-cli
+python scripts/render_mermaid.py examples/flow.mmd output/flow.svg
+
+# 将有来源和说明的 SVG/PNG 嵌入报告
+python scripts/create_report.py --output output/visual-report.html --system-fonts --figures-json examples/figures.json
+```
+
+图形支持放大、缩小、拖动、适应窗口和下载。静态图在关闭 JavaScript 或打印时仍可阅读。科学图表保留原始配色和独立数据来源记录。示例 CSV 是模拟数据，不代表任何产品测量结果。
+
+## 文件结构
 
 - `SKILL.md`：报告生成与验证规则。
 - `references/habitat-html-report-template.html`：可复用页面模板；文件名沿用历史命名。

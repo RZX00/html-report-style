@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="300" viewBox="0 0 900 300" role="img" aria-labelledby="title desc">
+<title id="title">Illustrative request ownership</title><desc id="desc">Client sends a request to API. API reads the database. A dashed box marks service ownership.</desc>
+<defs><marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="#73726c"/></marker></defs>
+<rect width="900" height="300" fill="#fdfdf7"/><g font-family="Arial, sans-serif" font-size="18" fill="#171717">
+<rect x="325" y="35" width="535" height="210" rx="12" fill="none" stroke="#d1cfc5" stroke-dasharray="6 4"/><text x="345" y="65" font-size="14">SERVICE OWNERSHIP · ILLUSTRATIVE</text>
+<g fill="#fafaf7" stroke="#d1cfc5"><rect x="40" y="110" width="190" height="70" rx="8"/><rect x="355" y="110" width="190" height="70" rx="8"/><rect x="650" y="110" width="180" height="70" rx="8"/></g>
+<text x="135" y="152" text-anchor="middle">Client</text><text x="450" y="152" text-anchor="middle">API</text><text x="740" y="152" text-anchor="middle">Database</text>
+<g stroke="#73726c" marker-end="url(#arrow)"><path d="M230 145H345"/><path d="M545 145H640"/></g><text x="278" y="125" font-size="13" text-anchor="middle">request</text><text x="595" y="125" font-size="13" text-anchor="middle">read/write</text>
+<text x="40" y="275" font-size="13" fill="#5e5d59">Example only. Replace ownership and arrows with verified system behavior.</text></g></svg>

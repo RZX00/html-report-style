@@ -39,6 +39,18 @@ Read `references/claude-docs-visual-spec.md` when changing the design or checkin
 
 ## Content and components
 
+### Visual selection and generation
+
+Read `references/visualization-guide.md` when choosing or adding tables, ASCII, Mermaid, SVG, or a pan/zoom canvas. Read `references/scientific-figures.md` for numeric or research data. Choose representations by the reader's question; no fixed figure quota. Preserve prose conclusions and cite sources beside important visuals.
+
+- Exact comparisons: semantic HTML tables/matrices. Small hierarchies: ASCII. Processes/states: Mermaid rendered to SVG with `scripts/render_mermaid.py`; retain editable .mmd source.
+- Architecture and annotated relationships: adapt `assets/figures/architecture.svg` or `lifecycle.svg`. They are illustrative, never evidence about the user's system.
+- Numeric distributions/trends/uncertainty: use `scripts/plot_data.py` or other standard scientific plotting tools; retain input data, units, sample count, uncertainty definition and provenance. Do not invent measurements. Install optional dependencies only when the chosen representation requires them.
+- Large maps: use the offline figure viewport (zoom, drag, fit, export). Canvas rendering is optional for unusually large/dynamic data; SVG is the default so printing, offline viewing and export stay simple.
+- Embed SVG/PNG with `create_report.py --figures-json <manifest>`; schema in the visualization guide. Include title, alt text, caption and source per figure. Viewer assets are inlined automatically. Inspect labels, legends, clipping, mobile overflow and downloads. Export scientific charts as SVG or 300-dpi PNG; do not invert their colors in dark mode.
+
+The figure mode augments the document template, not replaces its contents. Replace the starter's example prose with the real analysis and include corresponding HTML tables for key numeric results.
+
 Lead with the useful conclusion and scope. Choose sections from the actual topic: findings, explanation, responsibility table, evidence, unknowns, next steps. Do not pad reports with a fixed section list or invented metrics.
 
 Use semantic headings, paragraphs, lists, tables and code blocks. Include evidence and distinguish facts, inferences and unknowns. Add inline SVG or offline HTML/CSS diagrams only when relationships benefit.

@@ -1,0 +1,4 @@
+[
+  {"file":"../assets/figures/architecture.svg","title":"职责与数据流","alt":"客户端请求 API，API 访问数据库；虚线框标记服务职责边界。","caption":"这是布局示例，箭头表示请求方向，并非对实际系统的描述。","source":"示意图，无测量数据"},
+  {"file":"../assets/figures/lifecycle.svg","title":"生命周期","alt":"草稿经过验证后发布。","caption":"使用状态图表达阶段与转换条件。","source":"示意图，无测量数据"}
+]
