@@ -32,6 +32,12 @@ python scripts/create_report.py --output output/report.html --title "分析报�
 
 生成后让 Agent 按 `SKILL.md` 替换示例正文、目录和元信息。脚本不会覆盖已有输出文件。内嵌字体的生成文件无需联网；系统字体模式的外观取决于本机字体，不能保证与原站一致。
 
+## 输出选择与正文写法
+
+默认产出一份离线中文 HTML 报告，用于给出结论、送审，或列出需要读者回答的问题。普通对话直接回答，不生成文件。只有读者必须自己操作才能看懂的部分才加交互。关闭 JavaScript 时，结论仍须可读。讲解视频和完整 Web 应用不在本 Skill 范围。
+
+正文按约八成 ASD-STE100 受控写作：一句一事，先定义术语，结论先行，事实、推断、未知分开写。完整规则、反例与改写示例见 [输出选择与受控正文](references/output-ladder-and-prose.md)。
+
 ## 图形与科研数据
 
 按信息选择表格、ASCII、Mermaid、SVG、可缩放画布和科研图表；不要求每份报告塞满图形。完整规范见 [图形选择指南](references/visualization-guide.md) 和 [科研绘图规范](references/scientific-figures.md)。

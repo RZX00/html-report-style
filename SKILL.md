@@ -1,6 +1,6 @@
 ---
 name: html-report-style
-description: Create or update self-contained Chinese HTML reports, analysis documents, plans, reviews, and architecture documentation using the Claude Code official documentation visual style. Use for substantial reports or HTML artifacts; ordinary conversational answers do not require a file.
+description: Create or update self-contained, offline Chinese HTML reports, analysis documents, plans, reviews, and architecture documentation using the Claude Code official documentation visual style. Use when the reader needs a conclusion, a review draft or questions to answer; add interaction only where the reader must operate something. Not for explainer videos or full web apps; ordinary conversational answers do not require a file.
 metadata:
   short-description: Chinese HTML reports matching Claude Code Docs
 ---
@@ -8,6 +8,17 @@ metadata:
 # HTML Report Style
 
 Produce Chinese-first, offline HTML reports matching the typography and reading layout of https://code.claude.com/docs/zh-CN/claude-directory. Use the official Chinese page as the typography reference for Chinese reports. This reference supplies visual design, not an official report-generation skill. Preserve the report's own product name and evidence.
+
+## Output choice
+
+The default output is one offline Chinese HTML report built from the template. Each rung below costs more to make and to check than the one before; take the lowest one that serves the reader's task. `references/output-ladder-and-prose.md` maps this to Karpathy's understanding ladder and lists boundary cases.
+
+- **Conversation:** answer ordinary questions, status checks and yes/no questions in chat. Create no file.
+- **Report (default):** when the reader needs a conclusion, a review draft or questions to answer, create the static offline report.
+- **Interaction:** only for a part the reader must operate to understand, such as changing an input, filtering many rows or exploring a large map. State every conclusion, key number and representative case in static HTML that stays readable with JavaScript off. Keep controls offline and inside the visual contract. A full web app (server, login, live data, shared state) is outside this skill.
+- **Video:** explainer videos (narrated animation, 3Blue1Brown-style, synthetic voice) are outside this skill. Do not script, render or embed one; say so and offer the report with diagrams.
+
+An explicit user format choice, such as Markdown, overrides the HTML default. Video and full web apps stay out of scope.
 
 ## Starting point
 
@@ -23,7 +34,7 @@ If original fonts are unavailable, explicitly use `--system-fonts` and disclose 
 
 Replace the example article, navigation, category, description, and metadata with the actual report. Keep the embedded font block intact. The script refuses to overwrite an existing file. For existing reports, port the template's styles and document shell while preserving content and stable anchors.
 
-Use the user's output directory or the repository's appropriate docs location. Keep Markdown optional. Use Chinese by default; retain literal paths and code. Explicit user format choices override HTML defaults.
+Use the user's output directory or the repository's appropriate docs location. Keep Markdown optional. Use Chinese by default; retain literal paths and code.
 
 ## Visual contract
 
@@ -39,6 +50,17 @@ Read `references/claude-docs-visual-spec.md` when changing the design or checkin
 
 ## Content and components
 
+### Prose
+
+Write body text about 80% of the way to ASD-STE100, the controlled English of aerospace maintenance manuals: keep the rules that make text easy to read and drop the rest. Read `references/output-ladder-and-prose.md` before writing body text; it has the Chinese adaptation, examples and a check list.
+
+- One sentence carries one fact, action or judgement. End the sentence when the topic changes; do not chain clauses with commas.
+- Define each term at first use, then use that one term for that one thing. Do not rotate synonyms or coin undefined labels.
+- Lead with the conclusion and its scope, then give short evidence. Apply this to the report, each section and each paragraph.
+- Keep facts, inferences and unknowns apart. A fact cites its source. An inference names the facts it rests on. An unknown says what would resolve it and whether it blocks the conclusion.
+- Name the actor and use active voice. Write procedures as numbered imperative steps: one action per step, condition first, warning before the step.
+- Default to the 80% level and avoid stiff regulation-style prose. Move closer to STE for procedures, warnings before destructive actions and text meant for translation. Never claim STE compliance: STE is defined for English with an approved dictionary.
+
 ### Visual selection and generation
 
 Read `references/visualization-guide.md` when choosing or adding tables, ASCII, Mermaid, SVG, or a pan/zoom canvas. Read `references/scientific-figures.md` for numeric or research data. Choose representations by the reader's question; no fixed figure quota. Preserve prose conclusions and cite sources beside important visuals.
@@ -51,16 +73,18 @@ Read `references/visualization-guide.md` when choosing or adding tables, ASCII, 
 
 The figure mode augments the document template, not replaces its contents. Replace the starter's example prose with the real analysis and include corresponding HTML tables for key numeric results.
 
-Lead with the useful conclusion and scope. Choose sections from the actual topic: findings, explanation, responsibility table, evidence, unknowns, next steps. Do not pad reports with a fixed section list or invented metrics.
+Choose sections from the actual topic: findings, explanation, responsibility table, evidence, unknowns, next steps. Do not pad reports with a fixed section list or invented metrics.
 
-Use semantic headings, paragraphs, lists, tables and code blocks. Include evidence and distinguish facts, inferences and unknowns. Add inline SVG or offline HTML/CSS diagrams only when relationships benefit.
+Use semantic headings, paragraphs, lists, tables and code blocks. Add inline SVG or offline HTML/CSS diagrams only when relationships benefit.
 
 The template includes a file/detail explorer modeled on the referenced MEMORY.md panel. Use it only for file, component or ownership exploration; adapt labels and panes together. Retain pane content in the HTML. Its mobile stacked layout is an intentional report adaptation: the source hides its explorer below 700px. Remove the entire explorer for ordinary prose reports.
 
-Keep only useful local controls: anchors, theme switch, mobile menu, copy buttons, optional explorer. Do not copy the official logo, account links, AI assistant, feedback submission or nonfunctional search into reports.
+Keep only useful local controls: anchors, theme switch, mobile menu, copy buttons, optional explorer and figure viewer. Add other controls only for a part the reader must operate (see Output choice). Do not copy the official logo, account links, AI assistant, feedback submission or nonfunctional search into reports.
 
 ## Validation
 
 Open the generated artifact in a browser. Check 1440px, 768px and 390px, both themes, anchors, menu, copy controls, optional explorer, and long table/code content. Verify font loading and no external resource dependencies. Use a clean browser for color comparisons; Dark Reader rewrites source colors.
 
 Compare same-text Chinese and mixed Chinese/Latin headings and paragraphs against the Chinese reference, as well as English samples for Latin font fidelity. Report intentional and unverified differences honestly. Preserve no-JavaScript readability and reduced-motion/print behavior.
+
+Reload the report with JavaScript disabled. The conclusion, key numbers, tables and figures must stay readable, and each interactive part must have its static result beside it. Re-read the body against the prose check list in `references/output-ladder-and-prose.md`.
