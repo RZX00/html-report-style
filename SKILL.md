@@ -19,7 +19,7 @@ Choose the output from the reader's task, not from a ranking where a higher rung
 - **Interactive explanation:** add controls only where the reader's own input changes the answer and a table cannot list the cases. Keep the decision brief and representative result visible before interaction. A full web app (server, login, live data, shared state) is outside this skill.
 - **Media handoff:** narrated animation and explainer video are outside this skill. Do not produce the media here. Produce a static explanation brief, a scene or beat list, claims and sources, and a verification checklist for the separate media workflow.
 
-A report can combine both brief forms: the decision brief comes first, and the explanation layer follows it. An explicit user format choice, such as Markdown, overrides the HTML default.
+A report can combine both brief forms: the decision brief comes first, and the explanation layer follows it. An explicit user format choice, such as Markdown, overrides the HTML default. If the host project or team already prescribes the format or review surface for a deliverable, such as a GitHub Issue or PR template, follow it; create an HTML brief only where that format allows one or the user asks for it.
 
 ## Starting point
 
@@ -68,7 +68,7 @@ Read `references/visualization-guide.md` when choosing or adding tables, ASCII, 
 
 - Exact comparisons: semantic HTML tables/matrices. Small hierarchies: ASCII. Processes/states: Mermaid rendered to SVG with `scripts/render_mermaid.py`; retain editable .mmd source.
 - Architecture and annotated relationships: adapt `assets/figures/architecture.svg` or `lifecycle.svg`. They are illustrative, never evidence about the user's system.
-- Numeric distributions/trends/uncertainty: use `scripts/plot_data.py` or other standard scientific plotting tools; retain input data, units, sample count, uncertainty definition and provenance. Do not invent measurements. Install optional dependencies only when the chosen representation requires them.
+- Numeric distributions/trends/uncertainty: use `scripts/plot_data.py` or other standard scientific plotting tools; retain input data, units, sample count, uncertainty definition and provenance. Do not invent measurements. Install optional dependencies only when the chosen representation requires them, and ask the user first: installation needs network access and adds packages to their environment.
 - Large maps: use the offline figure viewport (zoom, drag, fit, export). Canvas rendering is optional for unusually large/dynamic data; SVG is the default so printing, offline viewing and export stay simple.
 - Embed SVG/PNG with `create_report.py --figures-json <manifest>`; schema in the visualization guide. Include title, alt text, caption and source per figure. Viewer assets are inlined automatically. Inspect labels, legends, clipping, mobile overflow and downloads. Export scientific charts as SVG or 300-dpi PNG; generate light/dark variants with `--theme` and provide `dark_file` in the manifest. Adapt neutral backgrounds, labels and axes to the report theme while preserving data colors; never use a blanket inversion filter. Verify actual images in both themes, not only the surrounding page.
 
