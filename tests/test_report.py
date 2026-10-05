@@ -21,4 +21,9 @@ class ReportTest(unittest.TestCase):
                 found=RUNTIME_LOAD.search(page)
                 self.assertIsNone(found,f'{name}: {found and page[found.start():found.start()+80]}')
 
+    def test_template_contract_keeps_decision_and_explanation_layers(self):
+        template=(ROOT/'references'/'habitat-html-report-template.html').read_text(encoding='utf-8')
+        for label in ('conclusion','facts','inferences','unknowns','explanation','next steps'):
+            self.assertIn(label,template)
+
 if __name__=='__main__':unittest.main()

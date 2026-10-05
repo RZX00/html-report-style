@@ -1,6 +1,6 @@
 ---
 name: html-report-style
-description: Create or update self-contained, offline Chinese HTML reports, analysis documents, plans, reviews, and architecture documentation using the Claude Code official documentation visual style. Use when the reader needs a conclusion, a review draft or questions to answer; add interaction only where the reader must operate something. Not for explainer videos or full web apps; ordinary conversational answers do not require a file.
+description: Create or update self-contained, offline Chinese decision briefs and explanation briefs using the Claude Code official documentation visual style. Use when the reader needs a conclusion, a review draft, a structural explanation or questions to answer; add interaction only where the reader must operate something. Not for full web apps; ordinary conversational answers do not require a file.
 metadata:
   short-description: Chinese HTML reports matching Claude Code Docs
 ---
@@ -11,14 +11,15 @@ Produce Chinese-first, offline HTML reports matching the typography and reading 
 
 ## Output choice
 
-The default output is one offline Chinese HTML report built from the template. Each rung below costs more to make and to check than the one before; take the lowest one that serves the reader's task. `references/output-ladder-and-prose.md` maps this to Karpathy's understanding ladder and lists boundary cases.
+Choose the output from the reader's task, not from a ranking where a higher rung is always better. Read `references/output-ladder-and-prose.md` before choosing a form or writing the body.
 
 - **Conversation:** answer ordinary questions, status checks and yes/no questions in chat. Create no file.
-- **Report (default):** when the reader needs a conclusion, a review draft or questions to answer, create the static offline report.
-- **Interaction:** only for a part the reader must operate to understand, such as changing an input, filtering many rows or exploring a large map. State every conclusion, key number and representative case in static HTML that stays readable with JavaScript off. Keep controls offline and inside the visual contract. A full web app (server, login, live data, shared state) is outside this skill.
-- **Video:** explainer videos (narrated animation, 3Blue1Brown-style, synthetic voice) are outside this skill. Do not script, render or embed one; say so and offer the report with diagrams.
+- **Decision brief:** when the reader must review, decide, approve, answer a question or keep a record. This is the default report form. Put the conclusion, scope and decision request first. Keep the evidence searchable and readable without JavaScript.
+- **Explanation brief:** when the reader must understand a mechanism, relationship or change. Add diagrams, tables or a small sequence of views after the static conclusion. Every visual must have a question, reading instruction, source and limitation.
+- **Interactive explanation:** add controls only where the reader's own input changes the answer and a table cannot list the cases. Keep the decision brief and representative result visible before interaction. A full web app (server, login, live data, shared state) is outside this skill.
+- **Media handoff:** narrated animation and explainer video are outside this skill. Do not produce the media here. Produce a static explanation brief, a scene or beat list, claims and sources, and a verification checklist for the separate media workflow.
 
-An explicit user format choice, such as Markdown, overrides the HTML default. Video and full web apps stay out of scope.
+A report can combine both brief forms: the decision brief comes first, and the explanation layer follows it. An explicit user format choice, such as Markdown, overrides the HTML default.
 
 ## Starting point
 
@@ -34,7 +35,7 @@ If original fonts are unavailable, explicitly use `--system-fonts` and disclose 
 
 Replace the example article, navigation, category, description, and metadata with the actual report. Keep the embedded font block intact. The script refuses to overwrite an existing file. For existing reports, port the template's styles and document shell while preserving content and stable anchors.
 
-Use the user's output directory or the repository's appropriate docs location. Keep Markdown optional. Use Chinese by default; retain literal paths and code.
+Use the user's output directory or the repository's appropriate docs location. Keep Markdown optional. Use Chinese by default; retain literal paths and code. If the host project provides a Chinese expression standard, treat that file as the language authority. This skill adds only the report-specific structure and validation rules; it must not copy or replace the host standard.
 
 ## Visual contract
 
@@ -52,14 +53,14 @@ Read `references/claude-docs-visual-spec.md` when changing the design or checkin
 
 ### Prose
 
-Write body text about 80% of the way to ASD-STE100, the controlled English of aerospace maintenance manuals: keep the rules that make text easy to read and drop the rest. Read `references/output-ladder-and-prose.md` before writing body text; it has the Chinese adaptation, examples and a check list.
+Write body text according to the host project's Chinese expression standard when one is available. Read `references/output-ladder-and-prose.md` before writing body text; it maps that standard to reports and keeps only the rules needed for evidence, decisions and explanation. Do not describe a report as STE-compliant.
 
 - One sentence carries one fact, action or judgement. End the sentence when the topic changes; do not chain clauses with commas.
 - Define each term at first use, then use that one term for that one thing. Do not rotate synonyms or coin undefined labels.
 - Lead with the conclusion and its scope, then give short evidence. Apply this to the report, each section and each paragraph.
-- Keep facts, inferences and unknowns apart. A fact cites its source. An inference names the facts it rests on. An unknown says what would resolve it and whether it blocks the conclusion.
+- Keep facts, inferences and unknowns apart. A fact cites its source. An inference names the facts it rests on. An unknown says what would resolve it and whether it blocks the conclusion. Label only claims that affect the decision; do not turn every paragraph into a form.
 - Name the actor and use active voice. Write procedures as numbered imperative steps: one action per step, condition first, warning before the step.
-- Default to the 80% level and avoid stiff regulation-style prose. Move closer to STE for procedures, warnings before destructive actions and text meant for translation. Never claim STE compliance: STE is defined for English with an approved dictionary.
+- Keep natural Chinese connective words when they carry the logic. Do not use fixed character counts as a hard rule; use an unusually long sentence as a signal to check whether it contains multiple topics.
 
 ### Visual selection and generation
 
@@ -71,7 +72,7 @@ Read `references/visualization-guide.md` when choosing or adding tables, ASCII, 
 - Large maps: use the offline figure viewport (zoom, drag, fit, export). Canvas rendering is optional for unusually large/dynamic data; SVG is the default so printing, offline viewing and export stay simple.
 - Embed SVG/PNG with `create_report.py --figures-json <manifest>`; schema in the visualization guide. Include title, alt text, caption and source per figure. Viewer assets are inlined automatically. Inspect labels, legends, clipping, mobile overflow and downloads. Export scientific charts as SVG or 300-dpi PNG; generate light/dark variants with `--theme` and provide `dark_file` in the manifest. Adapt neutral backgrounds, labels and axes to the report theme while preserving data colors; never use a blanket inversion filter. Verify actual images in both themes, not only the surrounding page.
 
-The figure mode augments the document template, not replaces its contents. Replace the starter's example prose with the real analysis and include corresponding HTML tables for key numeric results.
+The figure mode augments the document template, not replaces its contents. Replace the starter's example prose with the real analysis and include corresponding HTML tables for key numeric results. Put the decision brief before the figure section. If an explanation needs animation or video, keep the static explanation and the media handoff in the report.
 
 Choose sections from the actual topic: findings, explanation, responsibility table, evidence, unknowns, next steps. Do not pad reports with a fixed section list or invented metrics.
 
@@ -87,4 +88,4 @@ Open the generated artifact in a browser. Check 1440px, 768px and 390px, both th
 
 Compare same-text Chinese and mixed Chinese/Latin headings and paragraphs against the Chinese reference, as well as English samples for Latin font fidelity. Report intentional and unverified differences honestly. Preserve no-JavaScript readability and reduced-motion/print behavior.
 
-Reload the report with JavaScript disabled. The conclusion, key numbers, tables and figures must stay readable, and each interactive part must have its static result beside it. Re-read the body against the prose check list in `references/output-ladder-and-prose.md`.
+Before publishing, verify the output choice against the reader's task. The first screen must state the conclusion, its scope and the decision or question. If the report has an explanation layer, verify that each figure states the question, reading instruction, source and limitation. If it has interaction, open the representative state and verify the static result with JavaScript disabled. If it has a media handoff, verify the scene list, claims and sources without pretending that the media itself was produced or checked. Re-read the body against the prose check list in `references/output-ladder-and-prose.md`.

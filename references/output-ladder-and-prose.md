@@ -1,150 +1,165 @@
-# Output ladder and controlled prose
+# Output choice and controlled prose
 
-Read this before choosing an output form or writing report body text. It refines `SKILL.md`; the visual contract, offline delivery and Chinese-first default stay unchanged.
+Read this before choosing an output form or writing report body text. It maps the understanding ladder discussed in Karpathy's October 2, 2026 post to this skill. The visual contract, offline delivery and Chinese-first default stay unchanged.
 
-## The ladder and this skill's rung
+## Start with the reader's task
 
-Andrej Karpathy's post of 2026-10-02 (https://x.com/karpathy/status/2105819303471976479) ranks formats that make model output easier to understand. Each rung is "even better" than the one before: writing in ASD-STE100, sometimes softened to "80% of the way"; diagrams; HTML web pages; bespoke explainer videos. His summary is that human work rises into oversight and understanding, and that cheap code makes "large, custom, discardable software artifacts" worth making.
+The formats answer different questions. A later format is not automatically better.
 
-| Rung | What it adds | This skill |
-| --- | --- | --- |
-| Controlled writing | Text that reads correctly the first time | The prose contract below, in every report |
-| Diagrams | Structure at a glance | Tables, ASCII, Mermaid, SVG and plots; see `visualization-guide.md` |
-| Web page | Layout, navigation, interaction | The container: one offline static report. Interaction only for a part the reader must operate |
-| Explainer video | Paced, narrated explanation | Out of scope. A video skill would be separate |
+| Reader task | Output | First thing the reader must see | Additional requirement |
+| --- | --- | --- | --- |
+| Get a short answer | Conversation | The answer | Create no file unless the reader needs a durable artifact |
+| Review, decide, approve or keep a record | Decision brief | Conclusion, scope and decision request | Evidence must be searchable and readable with JavaScript off |
+| Understand a mechanism, relationship or change | Explanation brief | Static conclusion and the question the visual answers | Add a diagram, table or sequence only when it reduces explanation cost |
+| Explore cases that cannot fit in a table | Interactive explanation | Static result and representative case | Keep controls local, keyboard usable and non-essential to the conclusion |
+| Learn a complex idea through pacing or narration | Media handoff | Static explanation and claims | Deliver a scene or beat list to the separate media workflow; do not pretend this skill produced the video |
 
-This skill makes documents that people review, decide on and keep. A reviewer must find, quote and check each claim, in a review folder, a file previewer, on paper or on a phone. Static text does this best: it is searchable, quotable and printable, and it stays readable with scripts blocked or years later offline. Interaction can hide a result behind a state; video is linear and hard to cite. A report is a record to keep, not a discardable artifact. Each rung up costs more to make and to verify, so climb only when the reader's task needs it.
+Use the lowest form that lets the reader complete the task. A report may combine two forms. Put the decision brief first and the explanation layer after it. This keeps the record useful when a reader prints it, quotes it, opens it years later or blocks scripts.
 
-## Choose the output
+## Decision brief and explanation brief
 
-Ask in this order:
+### Decision brief
 
-1. Did the user name a format? Use it. Video and full web apps stay out of scope.
-2. Is it an ordinary question, a status check or a yes/no answer? Reply in chat; create no file.
-3. Does the reader need a conclusion, a review draft or questions to answer? Create the offline report. This is the default.
-4. Must the reader operate something to understand it? Add interaction to that part of the report only, under the rules below.
-5. Is it a request for an explainer video? Say it is outside this skill and offer a report with diagrams.
+Use a decision brief for a review, a plan, an incident summary, an architecture choice or a request for approval.
 
-Do not create an HTML file when:
+The first screen states four things:
 
-- A few paragraphs in chat answer the question, for example what a parameter means.
-- The answer is a status, a yes/no decision or a single command.
-- The user asked for Markdown, another document format or slides.
-- The result needs live data, login, a server or shared editing. That is an app, not a report.
-- The deliverable is a video, a narration or an animation.
+1. **Conclusion:** what the report says or recommends.
+2. **Scope:** which system, time range, version or audience the conclusion covers.
+3. **Decision request:** what the reader must approve, reject, answer or leave unchanged.
+4. **Evidence state:** which claims are facts, inferences or unknowns.
 
-### Interaction rules
+Use this order when it fits the topic:
 
-Interaction is justified when the reader's own input decides the result and a table cannot list the cases: what-if inputs, filtering many rows, exploring a large map, stepping through states.
+```text
+Conclusion -> scope -> decision request
+Facts -> inferences -> unknowns
+Options or trade-offs
+Next steps and owner
+Sources
+```
 
-- Write the conclusion, key numbers and the representative case in static HTML first. A control explores around them; it never holds the only copy of a result.
-- Pair each control with a static table or figure of the main cases, and open in the representative state.
-- Without JavaScript, hide or disable the controls and keep all content visible, as the figure viewer and file explorer already do.
-- Inline all code and data. Add no CDN, network request, external font or analytics.
-- Reuse the template's tokens and components; add no new visual style. Support keyboard use and reduced motion.
+Do not make the reader infer the decision from a long background section. Background belongs after the decision request unless it is required to understand the scope.
 
-Do not add interaction for decoration: animation, tabs that hide required text, or a slider over three values that a table shows at once.
+### Explanation brief
 
-## Controlled prose: about 80% of ASD-STE100
+Use an explanation brief when the reader must form a mental model. Start with the conclusion, then name the question that the visual answers.
 
-ASD-STE100 Simplified Technical English is a controlled language first developed for aerospace maintenance documentation. Its current edition (January 2025) has 53 writing rules and an approved English dictionary of about 900 words. Reports here are Chinese, so this skill borrows the writing rules and drops the dictionary and English grammar rules. In an English report, use STE's own word counts as the length signal. Never describe a report as STE-compliant. Paraphrases below follow public summaries such as https://en.wikipedia.org/wiki/Simplified_Technical_English; the specification is the authority.
+Every important visual has four nearby parts:
 
-The same rules apply to figure captions, table notes and callouts.
+- **Question:** what should the reader learn from this visual?
+- **Reading instruction:** where should the reader look, and in what order?
+- **Source:** which file, measurement, commit, system or date supports it?
+- **Limitation:** what the visual does not prove?
 
-### Kept: the 80%
+Keep a searchable table or short paragraph beside a chart. Do not make color, animation or hover state the only carrier of a claim. Mark illustrative diagrams as illustrative, and do not use them as evidence about a real system.
 
-| STE rule (paraphrased) | In Chinese reports |
-| --- | --- |
-| One instruction per sentence | This skill extends it to every sentence: one sentence, up to 。, carries one fact, action or judgement. End it when the topic changes instead of chaining clauses with commas. Two attributes of the same subject may share a sentence. |
-| At most 20 words per procedural sentence and 25 per descriptive sentence | Treat length as a signal. A statement over about 50 characters or a step over about 30, not counting code and paths, usually carries two topics. These numbers are this skill's rough conversion, not STE's. |
-| One word, one meaning; technical names are allowed | Define a term at first use: the Chinese name, the code name in `code`, and one sentence of meaning if the reader may not know it. Then use only that name. Expand abbreviations at first use. Do not coin a label without defining it. |
-| No noun cluster longer than three words | Keep at most two 的 in one modifier chain and at most three stacked nouns. Split the phrase into a sentence or a table, or define a term for it. |
-| Active voice; do not omit parts of a sentence (verb, subject, article) to make it shorter | Name who or what acts: a role, a service, a script. Avoid 被 and subjectless sentences when the actor is known. A short sentence still keeps its subject and verb. Use the verb itself: 修改配置, not 对配置进行修改. |
-| One topic per paragraph, at most six sentences | Open each paragraph with its claim, then support it. Start a new paragraph when the claim changes. |
-| Procedures in the imperative; vertical lists for complex text | Number the steps. Give one action per step and put the condition first (如果……，……). |
-| A warning starts with a clear command or condition, then explains the risk | Place the warning before its step: the command first, then the specific risk. |
+## Interaction and media handoff
 
-### Facts, inferences and unknowns
+Interaction is justified only when the reader's own input changes the answer and a table cannot list the cases. Examples include what-if inputs, filtering many rows and exploring a genuinely large map.
 
-This is not an STE rule. It is this skill's evidence discipline, and it depends on one-topic sentences: a sentence that mixes an observation with its explanation cannot carry one label.
+- Write the conclusion, key numbers and representative case in static HTML first.
+- Open the interaction in the representative state.
+- Keep the main cases in a table or figure beside the control.
+- With JavaScript disabled, show the conclusion and the static result. Hide or disable controls that cannot work.
+- Inline code and data. Add no CDN, network request, external font or analytics.
+- Reuse the template's tokens and components. Support keyboard use and reduced motion.
 
-- **事实**: read, measured, executed or cited directly. Give the source: file and line, log, commit, link or measurement date. State it without hedging.
-- **推断**: reasoned from facts. Name the facts it rests on and how strong it is. One hedge word is enough (可能, 很可能); do not stack them.
-- **未知**: not yet established. Say what would resolve it, who checks it, and whether it blocks the conclusion.
+Do not add interaction for decoration. Do not hide required prose in tabs. Do not use a slider when a table can show the three values.
 
-Label the claims a decision depends on: findings, causes, risks, recommendations. Background description needs no labels. Put the label at the start of a sentence or list item (事实：), in a subsection heading, or in a table column. A causal sentence may stand alone when the cause was verified, for example by reproduction. Otherwise split the observation (事实) from the explanation (推断).
+Video and narrated animation are outside this skill. When a reader asks for them, create a media handoff instead of a fake implementation:
 
-### Dropped: the other 20%
+```text
+Static conclusion
+Audience and learning goal
+Scene or beat list
+Claim and source for each scene
+Unknowns and required review
+Static fallback for print and no-JavaScript use
+```
 
-- The approved dictionary. Use normal Chinese and the project's own terms.
-- English-only grammar rules: verb forms, -ing words, article use, contractions.
-- Hard length limits in descriptive text. Length stays a signal.
-- STE's punctuation rules. Use standard Chinese punctuation; a chain of semicolons is usually several sentences, so split it.
+The handoff must not claim that the separate media workflow has rendered, checked or published the media.
 
-### When to move closer to STE
+## Controlled prose for Chinese reports
 
-Tighten toward full STE for runbooks and operation steps (deploy, migrate, roll back, recover), warnings before destructive or irreversible actions, checklists used for audit, and text that will be machine-translated or read by non-native readers. There, treat the length signals as limits and write every instruction in the imperative.
+The host project's Chinese expression standard is the language authority when one exists. This reference does not replace that standard or copy its full rule set. It tells the report writer how to apply the standard to evidence and presentation.
 
-### Too far
+The report writer should:
 
-Chasing short sentences alone produces telegraphic text: fragments, dropped subjects, missing connectives. STE itself forbids omitting parts of a sentence to make it shorter. Over-strict use also turns an explanation into a checklist: every sentence a command, numbered lists used for an argument, the same sentence frame repeated. Keep connectives such as 因为, 所以 and 但 when they carry the logic. Also remove phrases that carry no information, such as 值得注意的是 and 综上所述.
+- define a technical term at first use, then keep one name for that thing;
+- lead with the conclusion and its scope;
+- state who acts when the actor is known;
+- give each sentence one fact, action or judgement;
+- keep causal connectives when they carry the reasoning;
+- remove filler, invented labels and unsupported degree words;
+- distinguish facts, inferences and unknowns when the distinction affects a decision;
+- use a table for exact comparison, a diagram for structure or sequence, and prose for judgement;
+- use numbered imperative steps for procedures, with warnings before risky actions.
+
+Do not turn this into a rigid style costume. Do not use fixed Chinese character counts as a rule. A long sentence is a signal to check whether it contains more than one topic. Short fragments are also a problem when they remove the actor or the logical connection.
+
+### Evidence labels
+
+Use labels where a reader could otherwise mistake an interpretation for an observation:
+
+- **事实：** something read, measured, executed or cited directly. Name the source and date when they matter.
+- **推断：** a judgement derived from named facts. State the basis and the confidence that the evidence supports.
+- **未知：** something not established. State what would resolve it, who checks it and whether it blocks the conclusion.
+
+Do not label every sentence mechanically. Background facts can remain ordinary prose. Label the claims that the decision depends on.
 
 ## Before and after
 
-The examples are fictional and only show the writing.
+### Choose the output
 
-**One topic per sentence**
+```text
+Before: 这次问题需要一个更好的输出，最好做成可交互网页，最后再考虑视频。
 
-> Before: 迁移脚本在预发环境执行成功，但由于生产库数据量大约是预发的四十倍并且存在历史遗留的空值，所以预计执行时间会明显变长，需要提前和 DBA 确认维护窗口。
->
-> After: 迁移脚本已在预发环境执行成功。生产库数据量约为预发的 40 倍，并有历史遗留的空值。推断：生产执行时间会明显更长。发布前，发布负责人需与 DBA 确认维护窗口。
+After: 读者需要先决定是否合并。先出一份决策稿。决策稿之后再加图，解释改动范围。只有读者必须自己改变输入时，才加交互。视频交给单独的媒体流程。
+```
 
-**Define the term, then keep it**
+Why: the revised version names the reader's task and assigns each form a job. It does not treat a more elaborate artifact as automatically better.
 
-> Before: 本次改造主要涉及入口层。网关收到请求后先查限流配置，GW 侧命中规则就直接拒绝，接入层日志里能看到记录。
->
-> After: 本文的“网关”指 `api-gateway` 服务，它接收所有外部请求。网关收到请求后先查限流配置。请求命中限流规则时，网关直接拒绝，并写一条拒绝日志。
+### Separate observation from explanation
 
-**Conclusion first; facts, inferences and unknowns apart**
+```text
+Before: 这次改动明显提高了理解效率，所以应该合并。
 
-> Before: 我们对最近一周的超时问题做了比较全面的排查，从日志看晚高峰超时明显偏多，重试没有退避应该是放大了问题，另外采样率低也影响了判断，综上所述建议先改重试策略。
->
-> After:
->
-> 结论：先给网关重试加退避，暂不扩容。
->
-> - 事实：9 月 28 日至 10 月 4 日，晚高峰超时率约 2%，其他时段低于 0.1%。来源：网关访问日志。
-> - 事实：重试配置为失败后立即重试 3 次，没有退避。来源：`gateway.yaml` 的 `retry` 段。
-> - 推断：立即重试会在高峰期叠加请求，很可能放大了超时。依据是上面两条事实，尚未压测验证。
-> - 未知：超时的初始原因还没有确认。日志采样率只有 1%，提高到 10% 后复核。这一项不影响先加退避。
+After: 事实：PR 修改了 skill 规则、reference 和离线测试。事实：模板布局没有变化。推断：读者更容易先看到结论，再判断是否需要图或交互。这个推断还没有用使用记录验证。建议：先合并规则改动，再观察三份真实报告。
+```
 
-**Closer to STE: a procedure**
+Why: the revised version does not present an unmeasured effect as a fact. It also gives the reader an action that follows from the evidence.
 
-> Before: 回滚的时候要先确认一下当前版本号，然后把流量切走，等没有请求了以后执行回滚脚本，最好再看一眼监控有没有恢复。
->
-> After:
->
-> 警告：先切走流量，再执行回滚。回滚会中断进行中的写请求。
->
-> 1. 记下当前版本号（`deploy status` 的输出）。
-> 2. 把流量切到备用集群。
-> 3. 等待活跃连接数降到 0。
-> 4. 运行 `deploy rollback --to <版本号>`。
-> 5. 观察错误率 5 分钟。
-> 6. 如果错误率没有回到基线，通知值班负责人。
+### Describe a visual
 
-**Too far, then 80%**
+```text
+Before: 下面的图说明了整个流程。
 
-> Too far: 网关超时。原因未知。执行检查。检查日志。采样率低。提高采样率。
->
-> 80%: 网关晚高峰超时的初始原因还不清楚。现有日志采样率只有 1%，样本不足以定位。下一步把采样率提到 10%，收集一个晚高峰的数据后再判断。
+After: 问题：请求在哪个服务边界内处理？阅读顺序：先看客户端到 API 的实线箭头，再看虚线框中的职责范围。来源：架构评审提交 abc123。限制：这张图表达职责关系，不代表请求量或性能。
+```
 
-## Check before publishing
+Why: the reader knows what to inspect and what not to infer.
 
-- The first screen states the conclusion, its scope, and what the reader must decide or answer.
-- Each section and paragraph opens with its claim.
-- No sentence carries two topics; long sentences were checked.
-- Each term is defined at first use and keeps one name.
-- Claims that a decision depends on are labelled 事实, 推断 or 未知, with a source, a basis or the next check.
-- Steps are numbered imperatives with one action each; warnings come before their steps.
-- With JavaScript off, every conclusion and key number is still readable.
+### Keep the sentence natural
+
+```text
+Too far: 网关超时。原因未知。执行检查。检查日志。采样率低。提高采样率。
+
+Better: 网关晚高峰超时的初始原因还不清楚。现有日志采样率只有 1%，样本不足以定位。下一步把采样率提到 10%，收集一个晚高峰的数据后再判断。
+```
+
+Why: short sentences alone are not the goal. The better version keeps the subject, reason and next action.
+
+## Publishing checklist
+
+- The first screen states the conclusion, scope and decision or question.
+- The output form matches the reader's task.
+- A decision brief comes before an explanation layer.
+- Each important visual states its question, reading instruction, source and limitation.
+- Interactive controls do not contain the only copy of a conclusion or key number.
+- A media request has a static explanation and a handoff checklist.
+- Terms are defined once and keep one name.
+- Decision-relevant claims separate facts, inferences and unknowns.
+- Long sentences were checked as signals, not rejected by a fixed character limit.
+- Procedures use one action per numbered step, with warnings before risky actions.
+- With JavaScript off, the conclusion, key numbers, tables and figures remain readable.
